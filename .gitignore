@@ -1,0 +1,4 @@
+.staging/
+*.sha256
+workflow_state.json.lock
+.gitkeep
