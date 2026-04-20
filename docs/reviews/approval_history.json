@@ -4,5 +4,23 @@
     "approver": "Human Expert",
     "timestamp": "2026-04-20T10:04:46.807537",
     "status": "APPROVED"
+  },
+  {
+    "phase": "design",
+    "approver": "Human Expert",
+    "timestamp": "2026-04-20T10:16:04.455496",
+    "status": "APPROVED"
+  },
+  {
+    "phase": "dev",
+    "approver": "Human Expert",
+    "timestamp": "2026-04-20T11:20:49.029083",
+    "status": "APPROVED"
+  },
+  {
+    "phase": "test",
+    "approver": "Human Expert",
+    "timestamp": "2026-04-20T12:42:16.929057",
+    "status": "APPROVED"
   }
 ]

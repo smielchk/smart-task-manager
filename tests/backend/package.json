@@ -1,0 +1,11 @@
+{
+  "name": "qa-smart-task-manager",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "playwright": "^1.40.0"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.59.1"
+  }
+}

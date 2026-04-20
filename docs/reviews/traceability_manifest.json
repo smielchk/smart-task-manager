@@ -1,0 +1,322 @@
+[
+  {
+    "requirement_id": "REQ_TASK_MGMT_001",
+    "description": "任务 CRUD 基础操作（创建/查看/更新/软删除/恢复/状态变更/筛选/排序/分页）",
+    "source_files": [
+      "backend/app/models/task.py",
+      "backend/app/services/task_service.py",
+      "backend/app/api/tasks.py",
+      "frontend/src/pages/Tasks/index.tsx",
+      "frontend/src/pages/Tasks/TaskList.tsx",
+      "frontend/src/pages/Tasks/TaskForm.tsx",
+      "frontend/src/pages/Tasks/TaskFilter.tsx",
+      "frontend/src/pages/Tasks/TaskSortSelector.tsx",
+      "frontend/src/pages/Tasks/TaskDetail.tsx",
+      "frontend/src/api/tasks.ts",
+      "frontend/src/components/Task/TaskCard.tsx",
+      "frontend/src/components/Task/StatusBadge.tsx"
+    ],
+    "functions_classes": [
+      "Task",
+      "TaskStatus",
+      "Priority",
+      "TaskService.create_task",
+      "TaskService.update_task",
+      "TaskService.update_status",
+      "TaskService.soft_delete",
+      "TaskService.restore",
+      "TaskService.get_task_list",
+      "TaskList",
+      "TaskForm",
+      "TaskFilter",
+      "TaskSortSelector",
+      "TaskDetail",
+      "TaskCard"
+    ],
+    "bug_fixes": ["BUG_001", "BUG_002", "BUG_003", "BUG_005", "BUG_006"]
+  },
+  {
+    "requirement_id": "REQ_TASK_MGMT_002",
+    "description": "自然语言创建任务（AI_NLP 解析）",
+    "source_files": [
+      "backend/app/ai/nlp_parser.py",
+      "backend/app/ai/prompt_builder.py",
+      "backend/app/ai/client.py",
+      "backend/app/api/tasks.py",
+      "backend/app/services/task_service.py",
+      "frontend/src/pages/Tasks/SmartCreate.tsx",
+      "frontend/src/pages/Tasks/ParsePreview.tsx",
+      "frontend/src/api/tasks.ts"
+    ],
+    "functions_classes": [
+      "NLPParser",
+      "ParsedTask",
+      "PromptBuilder.build_nlp_prompt",
+      "AIClient.chat",
+      "TaskService.create_from_nlp",
+      "SmartCreate",
+      "ParsePreview"
+    ],
+    "cr_fixes": ["H-001"]
+  },
+  {
+    "requirement_id": "REQ_TASK_MGMT_003",
+    "description": "自动分类与标签系统（AI 分类、标签推荐、标签合并、CRUD）",
+    "source_files": [
+      "backend/app/models/category.py",
+      "backend/app/models/tag.py",
+      "backend/app/ai/classifier.py",
+      "backend/app/ai/suggestion_engine.py",
+      "backend/app/services/category_service.py",
+      "backend/app/services/tag_service.py",
+      "backend/app/api/categories.py",
+      "backend/app/api/tags.py",
+      "backend/app/main.py"
+    ],
+    "functions_classes": [
+      "Category",
+      "Tag",
+      "TaskTag",
+      "Classifier",
+      "SuggestionEngine",
+      "CategoryService",
+      "TagService.merge_tags",
+      "init_default_categories"
+    ]
+  },
+  {
+    "requirement_id": "REQ_TASK_MGMT_004",
+    "description": "智能优先级排序（AI 评分 + 规则引擎降级 + 定时全量重算）",
+    "source_files": [
+      "backend/app/ai/priority_engine.py",
+      "backend/app/ai/fallback_priority.py",
+      "backend/app/models/ai_cache.py",
+      "backend/app/api/tasks.py",
+      "backend/app/scheduler/jobs/daily_priority_recalc.py",
+      "backend/app/services/task_service.py",
+      "frontend/src/pages/Tasks/TaskSortSelector.tsx"
+    ],
+    "functions_classes": [
+      "PriorityEngine",
+      "PriorityScore",
+      "rule_based_priority_score",
+      "AIPriorityCache",
+      "daily_priority_recalc.run",
+      "TaskService.get_task_list (sort=smart)"
+    ],
+    "cr_fixes": ["H-004"]
+  },
+  {
+    "requirement_id": "REQ_TASK_MGMT_005",
+    "description": "智能提醒（截止日/提前一天/AI 紧急预警/习惯时段 + 浏览器通知 + 页面内通知 + 免打扰）",
+    "source_files": [
+      "backend/app/services/reminder_service.py",
+      "backend/app/models/reminder_log.py",
+      "backend/app/ai/reminder_engine.py",
+      "backend/app/scheduler/jobs/reminder_check.py",
+      "backend/app/api/tasks.py",
+      "frontend/src/components/Notification/NotificationProvider.tsx",
+      "frontend/src/components/Notification/BrowserNotification.tsx",
+      "frontend/src/components/Notification/InPageNotification.tsx",
+      "frontend/src/pages/Settings/ReminderSettings.tsx"
+    ],
+    "functions_classes": [
+      "ReminderService.get_pending_reminders",
+      "ReminderEngine.assess_procrastination_risk",
+      "reminder_check.run",
+      "NotificationProvider",
+      "BrowserNotification",
+      "InPageNotification",
+      "ReminderSettings"
+    ],
+    "cr_fixes": ["H-001", "H-005"]
+  },
+  {
+    "requirement_id": "REQ_TASK_MGMT_006",
+    "description": "时间规划建议（AI 日/周规划生成 + 工作量评估 + 定时刷新）",
+    "source_files": [
+      "backend/app/ai/planning_engine.py",
+      "backend/app/services/planning_service.py",
+      "backend/app/api/planning.py",
+      "backend/app/scheduler/jobs/daily_plan_refresh.py",
+      "frontend/src/pages/Planning/index.tsx",
+      "frontend/src/pages/Planning/DailyPlan.tsx",
+      "frontend/src/pages/Planning/WeeklyPlan.tsx",
+      "frontend/src/pages/Planning/WorkloadIndicator.tsx",
+      "frontend/src/pages/Planning/PlanTimeline.tsx",
+      "frontend/src/api/planning.ts"
+    ],
+    "functions_classes": [
+      "PlanningEngine",
+      "PlanningService",
+      "daily_plan_refresh.run",
+      "DailyPlan",
+      "WeeklyPlan",
+      "WorkloadIndicator",
+      "PlanTimeline"
+    ]
+  },
+  {
+    "requirement_id": "REQ_TASK_MGMT_007",
+    "description": "任务看板视图（三列看板 + 跨列拖拽 + AI 列内排序 + 统计摘要）",
+    "source_files": [
+      "frontend/src/pages/Kanban/index.tsx",
+      "frontend/src/pages/Kanban/KanbanColumn.tsx",
+      "frontend/src/pages/Kanban/KanbanCard.tsx",
+      "frontend/src/pages/Kanban/KanbanHeader.tsx",
+      "backend/app/api/tasks.py"
+    ],
+    "functions_classes": [
+      "KanbanColumn",
+      "KanbanCard",
+      "KanbanHeader",
+      "PATCH /api/tasks/{id}/status (拖拽更新)"
+    ]
+  },
+  {
+    "requirement_id": "REQ_TASK_MGMT_008",
+    "description": "任务日历视图（月视图 + 周视图 + 优先级色块 + 日期任务弹窗）",
+    "source_files": [
+      "frontend/src/pages/Calendar/index.tsx",
+      "frontend/src/pages/Calendar/MonthView.tsx",
+      "frontend/src/pages/Calendar/WeekView.tsx",
+      "frontend/src/pages/Calendar/DayTasks.tsx",
+      "frontend/src/components/Task/PriorityBadge.tsx"
+    ],
+    "functions_classes": [
+      "MonthView",
+      "WeekView",
+      "DayTasks",
+      "PriorityBadge"
+    ]
+  },
+  {
+    "requirement_id": "REQ_TASK_MGMT_009",
+    "description": "任务统计与数据看板（完成率/趋势/分类分布/逾期率 可视化）",
+    "source_files": [
+      "backend/app/services/stats_service.py",
+      "backend/app/api/stats.py",
+      "frontend/src/pages/Stats/index.tsx",
+      "frontend/src/pages/Stats/SummaryCards.tsx",
+      "frontend/src/pages/Stats/CompletionTrend.tsx",
+      "frontend/src/pages/Stats/CategoryPie.tsx",
+      "frontend/src/pages/Stats/CompletionRing.tsx",
+      "frontend/src/api/stats.ts"
+    ],
+    "functions_classes": [
+      "StatsService.get_summary",
+      "StatsService.get_trends",
+      "SummaryCards",
+      "CompletionTrend",
+      "CategoryPie",
+      "CompletionRing"
+    ],
+    "bug_fixes": ["BUG_004"]
+  },
+  {
+    "requirement_id": "REQ_TASK_MGMT_010",
+    "description": "基于习惯学习（行为日志 + 每日学习分析 + 偏好查询/修正/重置 + 7天冷启动）",
+    "source_files": [
+      "backend/app/models/behavior.py",
+      "backend/app/services/behavior_log_service.py",
+      "backend/app/services/preference_service.py",
+      "backend/app/scheduler/jobs/daily_learning.py",
+      "backend/app/api/preferences.py",
+      "frontend/src/pages/Settings/PreferenceLearning.tsx",
+      "frontend/src/api/preferences.ts"
+    ],
+    "functions_classes": [
+      "UserBehaviorLog",
+      "UserPreference",
+      "BehaviorLogService.log",
+      "PreferenceService.run_daily_learning",
+      "PreferenceService.update_manual_override",
+      "PreferenceService.reset_learning_data",
+      "daily_learning.run",
+      "PreferenceLearning"
+    ]
+  },
+  {
+    "requirement_id": "REQ_TASK_MGMT_011",
+    "description": "用户认证与设置（注册/登录/JWT/路由守卫/CORS/设置 CRUD/时区/主题）",
+    "source_files": [
+      "backend/app/models/user.py",
+      "backend/app/models/settings.py",
+      "backend/app/api/auth.py",
+      "backend/app/api/settings.py",
+      "backend/app/middleware/auth.py",
+      "backend/app/config.py",
+      "backend/app/main.py",
+      "frontend/src/components/Layout/AuthGuard.tsx",
+      "frontend/src/pages/Tasks/LoginPage.tsx",
+      "frontend/src/pages/Settings/index.tsx",
+      "frontend/src/pages/Settings/GeneralSettings.tsx",
+      "frontend/src/pages/Settings/ProfileSection.tsx",
+      "frontend/src/pages/Settings/ReminderSettings.tsx",
+      "frontend/src/components/Task/ThemeToggle.tsx",
+      "frontend/src/api/auth.ts",
+      "frontend/src/api/settings.ts",
+      "frontend/src/store/index.ts"
+    ],
+    "functions_classes": [
+      "User",
+      "UserSettings",
+      "jwt_auth_middleware",
+      "Settings (JWT_SECRET, JWT_ALGORITHM, JWT_EXPIRE_DAYS)",
+      "AuthGuard",
+      "LoginPage",
+      "GeneralSettings",
+      "ProfileSection",
+      "ReminderSettings",
+      "ThemeToggle"
+    ]
+  },
+  {
+    "requirement_id": "REQ_TASK_MGMT_012",
+    "description": "AI 模型配置（OpenAI 兼容客户端/重试/降级/.env 配置/健康检查）",
+    "source_files": [
+      "backend/app/ai/client.py",
+      "backend/app/ai/retry.py",
+      "backend/app/ai/degradation.py",
+      "backend/app/config.py",
+      "backend/app/api/health.py",
+      "backend/.env.example",
+      "frontend/nginx-frontend.conf",
+      "frontend/src/components/AI/AIStatusIndicator.tsx",
+      "frontend/src/components/AI/LoadingOverlay.tsx",
+      "frontend/src/api/health.ts"
+    ],
+    "functions_classes": [
+      "AIClient",
+      "AIClient.is_available",
+      "ai_retry",
+      "AIDegradationMixin.call_with_fallback",
+      "Settings (AI_BASE_URL, AI_API_KEY, AI_MODEL_NAME, AI_REQUEST_TIMEOUT, AI_MAX_RETRIES, AI_RETRY_DELAY)",
+      "AIStatusIndicator",
+      "LoadingOverlay"
+    ],
+    "cr_fixes": ["B-001", "B-002"]
+  },
+  {
+    "requirement_id": "REQ_TASK_MGMT_013",
+    "description": "数据库配置（MySQL 8.0 / SQLAlchemy async / 连接管理 / 初始化）",
+    "source_files": [
+      "backend/app/config.py",
+      "backend/app/database.py",
+      "backend/app/models/__init__.py",
+      "backend/.env.example",
+      "backend/init.sql",
+      "backend/app/models/reminder_log.py",
+      "backend/alembic.ini",
+      "backend/alembic/env.py",
+      "docker-compose.yml"
+    ],
+    "functions_classes": [
+      "Settings (DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD)",
+      "init_db",
+      "close_db",
+      "get_db_session"
+    ],
+    "cr_fixes": ["H-002", "H-003"]
+  }
+]
